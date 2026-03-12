@@ -49,7 +49,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'An unexpected server error occurred.' });
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Lamp Store API running on http://localhost:${PORT}`);
-});
+// ─── Start Server (Locally) / Export (Vercel) ─────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Lamp Store API running on http://localhost:${PORT}`);
+  });
+}
+
+// Export the Express API so Vercel can handle it as a serverless function
+module.exports = app;
