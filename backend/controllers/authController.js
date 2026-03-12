@@ -3,7 +3,7 @@
 // - register: hashes password with bcrypt, stores user in Supabase 'users' table
 // - login: verifies password, returns a signed JWT containing id, username, role
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const supabase = require('../config/supabase');
 
