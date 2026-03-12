@@ -30,6 +30,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Parse incoming JSON request bodies (CRITICAL for req.body to work)
+app.use(express.json());
+
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
 
