@@ -14,20 +14,22 @@ const ordersRoutes = require('./routes/ordersRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ─── Global Middleware ────────────────────────────────────────────────────────
+// ─── CORS Middleware (must come BEFORE all routes) ────────────────────────────
+// Manually set CORS headers on EVERY response and immediately end OPTIONS (preflight) with 200
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+  res.setHeader('Access-Control-Max-Age', '86400'); // Cache preflight for 24 hours
 
-// Allow cross-origin requests from any origin (needed for Vercel deployment)
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  // Intercept the preflight OPTIONS request and return 200 immediately
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
 
-// Handle pre-flight OPTIONS requests for all routes
-app.options('*', cors());
+  next();
+});
 
-// Parse incoming JSON request bodies
-app.use(express.json());
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
 
