@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with base URL pointing to our Express backend
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://tugasukt-tf4v.vercel.app/api',
 });
 
 // Add a request interceptor to attach the JWT token
